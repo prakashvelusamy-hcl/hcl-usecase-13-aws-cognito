@@ -37,6 +37,7 @@ resource "aws_cognito_user_pool" "main" {
   }
 }
 
+
 resource "aws_cognito_user_pool_client" "main" {
   name         = "cognito-client"
   user_pool_id = aws_cognito_user_pool.main.id
@@ -95,6 +96,10 @@ resource "aws_cognito_user_pool_client" "main" {
   supported_identity_providers = ["COGNITO"]
 }
 
+resource "aws_cognito_user_pool_domain" "default_domain" {
+  domain       = "prakash-cognito-user-pool"  # unique prefix for your domain
+  user_pool_id = aws_cognito_user_pool.main.id
+}
 # Create a test user (optional - for development)
 resource "aws_cognito_user" "test_user" {
   user_pool_id = aws_cognito_user_pool.main.id
