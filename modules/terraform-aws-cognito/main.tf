@@ -55,36 +55,6 @@ resource "aws_cognito_user_pool_client" "main" {
   supported_identity_providers = ["COGNITO"]
 }
 
-# Cognito User Pool Client
-resource "aws_cognito_user_pool_client" "main" {
-  name         = "cognito-client"
-  user_pool_id = aws_cognito_user_pool.main.id
-
-  # Authentication flows
-  explicit_auth_flows = [
-    "ADMIN_NO_SRP_AUTH",
-    "USER_PASSWORD_AUTH"
-  ]
-
-  # Token validity
-  access_token_validity  = 60
-  id_token_validity     = 60
-  refresh_token_validity = 30
-
-  # Token validity units
-  token_validity_units {
-    access_token  = "minutes"
-    id_token      = "minutes"
-    refresh_token = "days"
-  }
-
-  # Prevent user existence errors
-  prevent_user_existence_errors = "ENABLED"
-
-  # Generate secret
-  generate_secret = true
-}
-
 # Create a test user (optional - for development)
 resource "aws_cognito_user" "test_user" {
   user_pool_id = aws_cognito_user_pool.main.id
