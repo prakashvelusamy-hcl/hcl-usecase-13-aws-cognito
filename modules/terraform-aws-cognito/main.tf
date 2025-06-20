@@ -44,13 +44,11 @@ resource "aws_cognito_user_pool_client" "main" {
 
   # Authentication flows
   explicit_auth_flows = [
-    "ADMIN_NO_SRP_AUTH",
-    "USER_PASSWORD_AUTH",
-    "ALLOW_USER_PASSWORD_AUTH",      # Sign in with username and password
-    "ALLOW_USER_SRP_AUTH",           # Sign in with secure remote password (SRP)
-    "ADMIN_NO_SRP_AUTH",             # Sign in with server-side administrative credentials (Note the name difference)
-    "ALLOW_CUSTOM_AUTH",             # Sign in with custom authentication flows from Lambda triggers
-    "REFRESH_TOKEN_AUTH" 
+    "ALLOW_USER_PASSWORD_AUTH",       # username and password
+    "ALLOW_USER_SRP_AUTH",            # SRP authentication
+    "ALLOW_ADMIN_USER_PASSWORD_AUTH", # admin user password auth (replacement for ADMIN_NO_SRP_AUTH)
+    "ALLOW_CUSTOM_AUTH",              # custom auth flows with Lambda triggers
+    "ALLOW_REFRESH_TOKEN_AUTH" 
   ]
 
   # Token validity
