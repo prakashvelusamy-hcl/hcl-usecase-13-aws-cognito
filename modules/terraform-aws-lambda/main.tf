@@ -66,7 +66,7 @@ data "archive_file" "lambda_zip" {
   output_path = "${path.module}/lambda_app/hello.zip"
 }
 resource "aws_lambda_function" "this" {
-  filename         = var.lambda_zip
+  filename         = data.archive_file.lambda_zip.output_path
   function_name    = "Hello-Lambda-Cognito"
   role             =  aws_iam_role.lambda_exec.arn
   handler          = "hello.handler"
