@@ -55,6 +55,7 @@ resource "aws_cognito_user_pool_client" "main" {
   supported_identity_providers = ["COGNITO"]
 }
 
+
 # Create a test user (optional - for development)
 resource "aws_cognito_user" "test_user" {
   user_pool_id = aws_cognito_user_pool.main.id
