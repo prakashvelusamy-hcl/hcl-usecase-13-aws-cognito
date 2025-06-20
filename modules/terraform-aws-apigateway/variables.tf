@@ -4,3 +4,5 @@ variable "integration_uri_arn" {
 }
 variable "aws_cognito_arn" {
 }
+variable "cognito_user_pool_id" {
+}
