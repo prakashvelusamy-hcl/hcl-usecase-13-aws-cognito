@@ -96,7 +96,7 @@ resource "aws_cognito_user_pool_client" "main" {
 }
 
 resource "aws_cognito_user_pool_domain" "default_domain" {
-  domain       = "prakash-cognito-user-pool"  # unique prefix for your domain
+  domain       = "prakash-user-pool"  # unique prefix for your domain
   user_pool_id = aws_cognito_user_pool.main.id
 }
 # Create a test user (optional - for development)
