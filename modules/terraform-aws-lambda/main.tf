@@ -65,7 +65,7 @@ data "archive_file" "lambda_zip" {
   source_file = "${path.module}/lambda_app/hello.py"
   output_path = "${path.module}/lambda_app/hello.zip"
 }
-resource "aws_lambda_function" "this" {
+resource "aws_lambda_function" "lambda" {
   filename         = data.archive_file.lambda_zip.output_path
   function_name    = "Hello-Lambda-Cognito"
   role             =  aws_iam_role.lambda_exec.arn
