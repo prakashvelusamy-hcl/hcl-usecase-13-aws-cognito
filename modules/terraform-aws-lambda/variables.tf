@@ -10,3 +10,5 @@
 #     description = "aws_apigatewayv2_arn"
 #     type = string
 # }
+variable "api_gateway_arn" {
+}
