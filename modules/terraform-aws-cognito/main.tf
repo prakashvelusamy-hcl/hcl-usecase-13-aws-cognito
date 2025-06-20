@@ -93,6 +93,14 @@ resource "aws_cognito_user_pool_client" "main" {
 
   # Supported identity providers (usually Cognito for user pool)
   supported_identity_providers = ["COGNITO"]
+    explicit_auth_flows = [
+    "ALLOW_USER_PASSWORD_AUTH",      # Sign in with username and password
+    "ALLOW_USER_SRP_AUTH",           # Sign in with secure remote password (SRP)
+    "ADMIN_NO_SRP_AUTH",             # Sign in with server-side administrative credentials (Note the name difference)
+    "ALLOW_CUSTOM_AUTH",             # Sign in with custom authentication flows from Lambda triggers
+    "REFRESH_TOKEN_AUTH"           # Get new user tokens from existing authenticated sessions
+  ]
+
 }
 
 resource "aws_cognito_user_pool_domain" "default_domain" {
