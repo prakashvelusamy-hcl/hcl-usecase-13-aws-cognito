@@ -68,8 +68,7 @@ resource "aws_cognito_user_pool_client" "main" {
 
   # Add callback URLs (replace with your actual URLs)
   callback_urls = [
-    "https://your-frontend-app.com/callback",        # Your frontend app or HTTP API callback URL
-    "https://your-http-api-id.execute-api.region.amazonaws.com/$default/"  # HTTP API invoke URL (optional)
+    "https://5mkrf9mwn7.execute-api.ap-south-1.amazonaws.com/my-docker-lambda"
   ]
 
   # Add logout URLs
