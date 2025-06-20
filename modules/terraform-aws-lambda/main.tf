@@ -81,7 +81,7 @@ resource "aws_lambda_function" "lambda" {
 resource "aws_lambda_permission" "apigw_invoke" {
   statement_id  = "AllowAPIGatewayInvoke"
   action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.docker_lambda.function_name
+  function_name = aws_lambda_function.lambda.function_name
   principal     = "apigateway.amazonaws.com"
   source_arn = "${var.api_gateway_arn}/*/GET/test"
 }
