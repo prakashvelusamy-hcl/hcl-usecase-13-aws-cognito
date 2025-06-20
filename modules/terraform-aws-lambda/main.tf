@@ -58,20 +58,23 @@ resource "aws_iam_role_policy_attachment" "lambda_logs" {
 #     cidr_blocks = ["0.0.0.0/0"]
 #   }
 # }
-resource "aws_lambda_function" "docker_lambda" {
-  function_name = "my-docker-lambda"
-  package_type = "Image"
-  image_uri = "495599733393.dkr.ecr.ap-south-1.amazonaws.com/my-app:v1"
-  role = aws_iam_role.lambda_exec.arn
-  timeout     = 30
-  memory_size = 128
-  # vpc_config {
-  #   subnet_ids         = var.private_subnet_id
-  #   security_group_ids = [aws_security_group.lambda_sg.id]
-  # }
-  tracing_config {
-    mode = "Active"
-  }
+
+
+data "archive_file" "lambda_zip" {
+  type        = "zip"
+  source_file = "${path.module}/lambda_app/hello.py"
+  output_path = "${path.module}/lambda_app/hello.zip"
+}
+resource "aws_lambda_function" "this" {
+  filename         = var.lambda_zip
+  function_name    = "Hello-Lambda-Cognito"
+  role             =  aws_iam_role.lambda_exec.arn
+  handler          = "hello.handler"
+  runtime          = "python3.11"
+  timeout          = 30
+  memory_size      = 128
+  source_code_hash = filebase64sha256(data.archive_file.lambda_zip.output_path)
+  depends_on       = [aws_iam_role.lambda_exec]
 }
 
 
@@ -80,7 +83,6 @@ resource "aws_lambda_permission" "apigw_invoke" {
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.docker_lambda.function_name
   principal     = "apigateway.amazonaws.com"
-  #source_arn    =  var.api_gateway_arn
   source_arn = "${var.api_gateway_arn}/*/GET/test"
 }
 
