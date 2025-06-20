@@ -80,7 +80,7 @@ resource "aws_cognito_user_pool_client" "main" {
   ]
 
   # Enable OAuth flows for hosted UI login page
-  allowed_oauth_flows = ["code", "implicit"]
+  allowed_oauth_flows = ["implicit"]
 
   # OAuth scopes you want to allow
   allowed_oauth_scopes = [
