@@ -3,5 +3,4 @@ variable "integration_uri_arn" {
     type = string
 }
 variable "aws_cognito_arn" {
-  
 }
