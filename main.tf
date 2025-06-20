@@ -20,6 +20,7 @@ module "api_gateway" {
   integration_uri_arn = module.lambda.integration_uri_arn
   aws_cognito_arn = module.aws_cognito.aws_cognito_arn
   cognito_user_pool_id = module.aws_cognito.cognito_user_pool_id
+  aws_region = var.aws_region
 }
 
 module "aws_cognito" {
