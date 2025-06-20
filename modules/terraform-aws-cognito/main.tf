@@ -1,3 +1,42 @@
+# Cognito User Pool
+resource "aws_cognito_user_pool" "main" {
+  name = "prakash-cognito-user-pool"
+  # Password policy
+  password_policy {
+    minimum_length    = 8
+    require_lowercase = true
+    require_numbers   = true
+    require_symbols   = true
+    require_uppercase = true
+  }
+
+  # User attributes
+  alias_attributes = ["email"]
+  
+  # Account recovery
+  account_recovery_setting {
+    recovery_mechanism {
+      name     = "verified_email"
+      priority = 1
+    }
+  }
+
+  # Email configuration
+  email_configuration {
+    email_sending_account = "COGNITO_DEFAULT"
+  }
+
+  # User pool add-ons
+  user_pool_add_ons {
+    advanced_security_mode = "ENFORCED"
+  }
+
+  tags = {
+    Name        = "prakash-cognito_user_pool"
+
+  }
+}
+
 resource "aws_cognito_user_pool_client" "main" {
   name         = "cognito-client"
   user_pool_id = aws_cognito_user_pool.main.id
@@ -27,8 +66,9 @@ resource "aws_cognito_user_pool_client" "main" {
   generate_secret = true
 
   # Add callback URLs (replace with your actual URLs)
-  callback_urls = [   
-    "https://your-http-api-id.execute-api.region.amazonaws.com/$default/"
+  callback_urls = [
+    "https://your-frontend-app.com/callback",        # Your frontend app or HTTP API callback URL
+    "https://your-http-api-id.execute-api.region.amazonaws.com/$default/"  # HTTP API invoke URL (optional)
   ]
 
   # Add logout URLs
@@ -54,7 +94,6 @@ resource "aws_cognito_user_pool_client" "main" {
   # Supported identity providers (usually Cognito for user pool)
   supported_identity_providers = ["COGNITO"]
 }
-
 
 # Create a test user (optional - for development)
 resource "aws_cognito_user" "test_user" {
