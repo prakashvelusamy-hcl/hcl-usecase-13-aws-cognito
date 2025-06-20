@@ -25,3 +25,7 @@
 #   description = "Number of public EC2 instances to create"
 #   type        = number
 # }
+
+
+variable "aws_region" {
+}

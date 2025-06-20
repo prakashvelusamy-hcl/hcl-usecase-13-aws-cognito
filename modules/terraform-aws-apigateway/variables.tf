@@ -6,3 +6,5 @@ variable "aws_cognito_arn" {
 }
 variable "cognito_user_pool_id" {
 }
+variable "aws_region" {
+}
