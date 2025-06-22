@@ -18,7 +18,7 @@ data "archive_file" "lambda_zip" {
 }
 resource "aws_lambda_function" "lambda" {
   filename         = data.archive_file.lambda_zip.output_path
-  function_name    = "Hello-Lambda-Cognito"
+  function_name    = var.aws_lambda_function_name
   role             =  aws_iam_role.lambda_exec.arn
   handler          = "hello.handler"
   runtime          = "python3.11"
@@ -26,6 +26,7 @@ resource "aws_lambda_function" "lambda" {
   memory_size      = 128
   source_code_hash = filebase64sha256(data.archive_file.lambda_zip.output_path)
   depends_on       = [aws_iam_role.lambda_exec]
+   tags            = var.project_tags
 }
 
 

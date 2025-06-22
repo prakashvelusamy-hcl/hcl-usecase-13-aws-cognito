@@ -1,6 +1,6 @@
 # Cognito User Pool
 resource "aws_cognito_user_pool" "main" {
-  name = "prakash-cognito-user-pool"
+  name = var.cognito_user_pool_name
   # Password policy
   password_policy {
     minimum_length    = 8
@@ -31,15 +31,12 @@ resource "aws_cognito_user_pool" "main" {
     advanced_security_mode = "ENFORCED"
   }
 
-  tags = {
-    Name        = "prakash-cognito_user_pool"
-
-  }
+  tags = var.project_tags
 }
 
 
 resource "aws_cognito_user_pool_client" "main" {
-  name         = "cognito-client"
+  name         =  var.cognito_user_pool_client_name
   user_pool_id = aws_cognito_user_pool.main.id
 
   # Authentication flows
@@ -70,9 +67,7 @@ resource "aws_cognito_user_pool_client" "main" {
   generate_secret = true
 
   # Add callback URLs (replace with your actual URLs)
-  callback_urls = [
-    "https://5mkrf9mwn7.execute-api.ap-south-1.amazonaws.com/my-docker-lambda"
-  ]
+  callback_urls = [var.full_api_url]
 
   # Add logout URLs
   logout_urls = [
